@@ -94,3 +94,37 @@ startGameBtn.addEventListener("click", function () {
   console.log(computerChoice);
   console.log("Hello");
 });
+
+// Spread operators
+const numbers = [1, 2, 3, 4, 5];
+// Copy the array using the spread operators
+const copyNumbers = [...numbers];
+
+/* Introducing Rest Parameters
+    1. it should be the last argument
+    2. and it should be only one parameter
+*/
+const sumUp = (...numbers) => {
+  let sum = 0;
+
+  for (const num of numbers) {
+    sum += num;
+  }
+
+  return sum;
+};
+
+// Special variable if you're using function keyword (arguments) - ES6
+const subtract  = function () {
+
+  let result = numbers[0];
+
+  for (const num of arguments) {
+    result -= num;
+  }
+
+  return result;
+};
+
+console.log(sumUp(1, 2, 3, 4, 5));
+console.log(subtract(20, 5, 10));
