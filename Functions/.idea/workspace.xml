@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5a26110c-f8a0-4809-9c5e-25825a0a4659" name="Changes" comment="learn about rest parameters and spread operator">
+      <change beforePath="$PROJECT_DIR$/functions-01-starting-code.zip" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/user/OneDrive/Documents/RoadToBeProgrammer/Javascipt/Coding/javascript-course/Functions/functions-01-starting-code"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="learn about rest parameters and spread operator" />
+    <option name="LAST_COMMIT_MESSAGE" value="learn about rest parameters and spread operator" />
+  </component>
+</project>
