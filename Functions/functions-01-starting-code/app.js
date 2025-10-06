@@ -115,8 +115,7 @@ const sumUp = (...numbers) => {
 };
 
 // Special variable if you're using function keyword (arguments) - ES6
-const subtract  = function () {
-
+const subtract = function () {
   let result = numbers[0];
 
   for (const num of arguments) {
@@ -128,3 +127,6 @@ const subtract  = function () {
 
 console.log(sumUp(1, 2, 3, 4, 5));
 console.log(subtract(20, 5, 10));
+
+// Passing another pointer to the other function
+// Call bank functions - it's called for you by something else, can't control when exactly it's called.
