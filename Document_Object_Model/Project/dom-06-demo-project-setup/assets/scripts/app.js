@@ -35,8 +35,28 @@ function updateUi () {
 
 }
 
+// Create a function that deletes the movies
+function deleteMovieHandler(newMovieId) {
+    let movieIndex = 0;
+    // Get the movie id
+    for (const movie of movies) {
+        if (movie.id === newMovieId) {
+            break;
+        }
+        movieIndex++;
+    }
+
+    // Remove the element in our array using the index we got. - splice(index, numberOfItemsYouWantToRemove)
+    movies.splice(movieIndex, 1);
+    // Get the list element (ul)
+    const listRoot = document.getElementById('movie-list');
+    // Get the child element then remove it
+    listRoot.children[movieIndex].remove();
+    // listRoot.removeChild(listRoot.children[movieIndex]);
+}
+
 // Create a function that will display the movies elements
-function renderNewMovieElement(title, imageUrl, rating) {
+function renderNewMovieElement(id, title, imageUrl, rating) {
     // Create a new element
     const newMovieElement = document.createElement('li');
     // Add a class
@@ -50,6 +70,10 @@ function renderNewMovieElement(title, imageUrl, rating) {
             <p>${rating}/5 stars</p>
         </div>
     `;
+
+    // Add a deleteHandler
+    // bind - reconfigure arguments that are received by the function
+    newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
 
     // Get the list element (ul)
     const listRoot = document.getElementById('movie-list');
@@ -103,6 +127,8 @@ function addMovieHandler() {
 
     // Create a new movie object
     const newMovie = {
+        // Generate an id (random number)
+        id: Math.random().toString(),
         title: titleValue,
         image: imageUrlValue,
         rating: ratingValue
@@ -115,7 +141,7 @@ function addMovieHandler() {
     toggleMovieModal();
     clearMovieInputs();
     //  Render the new movie to the UI
-    renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
+    renderNewMovieElement(newMovie.id, newMovie.title, newMovie.image, newMovie.rating);
     // Update the UI
     updateUi();
 }
