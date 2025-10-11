@@ -18,8 +18,44 @@ const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
 const userInputs = addMovieModalElement.querySelectorAll('input');
 // const userInputs = addMovieModalElement.getElementsByTagName('input');
 
+// Go to the entry section
+const entryTextElement = document.getElementById('entry-text');
+
 // Store all the valid movies input
 const movies = [];
+
+// Create a function that will display the movies
+function updateUi () {
+    //  Check if there are any movies
+    if (movies.length === 0) {
+        entryTextElement.style.display = 'block';
+    } else {
+        entryTextElement.style.display = 'none';
+    }
+
+}
+
+// Create a function that will display the movies elements
+function renderNewMovieElement(title, imageUrl, rating) {
+    // Create a new element
+    const newMovieElement = document.createElement('li');
+    // Add a class
+    newMovieElement.className = 'movie-element';
+    newMovieElement.innerHTML = `
+        <div class="movie-element__image">
+            <img src="${imageUrl}" alt="${title}">
+        </div>
+        <div class="movie-element__info">
+            <h2>${title}</h2>
+            <p>${rating}/5 stars</p>
+        </div>
+    `;
+
+    // Get the list element (ul)
+    const listRoot = document.getElementById('movie-list');
+    // Append the new element inside of this element (ul)
+    listRoot.append(newMovieElement);
+}
 
 // Clear the inputs after confirming and closing the modal
 function clearMovieInputs () {
@@ -78,6 +114,10 @@ function addMovieHandler() {
     // Close the modal and clear the inputs
     toggleMovieModal();
     clearMovieInputs();
+    //  Render the new movie to the UI
+    renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
+    // Update the UI
+    updateUi();
 }
 
 // Next one is opening the modal
