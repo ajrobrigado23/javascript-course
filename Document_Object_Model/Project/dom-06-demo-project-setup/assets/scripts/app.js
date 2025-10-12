@@ -21,6 +21,9 @@ const userInputs = addMovieModalElement.querySelectorAll('input');
 // Go to the entry section
 const entryTextElement = document.getElementById('entry-text');
 
+// Select the modal that show if we want to delete a modal
+const modal = document.getElementById('delete-modal');
+
 // Store all the valid movies input
 const movies = [];
 
@@ -35,8 +38,8 @@ function updateUi () {
 
 }
 
-// Create a function that deletes the movies
-function deleteMovieHandler(newMovieId) {
+// Modal that double check if you really want to delete a movie
+function deleteMovieModal(newMovieId) {
     let movieIndex = 0;
     // Get the movie id
     for (const movie of movies) {
@@ -55,6 +58,33 @@ function deleteMovieHandler(newMovieId) {
     // listRoot.removeChild(listRoot.children[movieIndex]);
 }
 
+// Create a function that cancel the deletion
+function cancelMovieDeletion() {
+    // Hide the modal
+    modal.classList.remove('visible');
+    toggleBackdrop();
+}
+
+// Create a function that deletes the movies
+function deleteMovieHandler(newMovieId) {
+    //  Show the modal that confirm or cancel the deletion
+    modal.classList.add('visible');
+    toggleBackdrop();
+
+    // Select the cancel button
+    const cancel = modal.querySelector('.btn--passive');
+    // Add an event listener (cancel the deletion)
+    cancel.addEventListener('click', cancelMovieDeletion);
+
+    // Select the confirm button
+    const confirm = modal.querySelector('.btn--danger');
+    // Add an event listener (confirm the deletion)
+    confirm.addEventListener('click', () => {
+        deleteMovieModal(newMovieId);
+        cancelMovieDeletion();
+    });
+}
+
 // Create a function that will display the movies elements
 function renderNewMovieElement(id, title, imageUrl, rating) {
     // Create a new element
@@ -68,8 +98,7 @@ function renderNewMovieElement(id, title, imageUrl, rating) {
         <div class="movie-element__info">
             <h2>${title}</h2>
             <p>${rating}/5 stars</p>
-        </div>
-    `;
+        </div>`;
 
     // Add a deleteHandler
     // bind - reconfigure arguments that are received by the function
@@ -93,9 +122,16 @@ function toggleBackdrop() {
     backdropElement.classList.toggle('visible');
 }
 
-function toggleMovieModal() {
+function closeMovieModal() {
+    // Close the modal
+    addMovieModalElement.classList.remove('visible');
+    // Close the backdrop
+    toggleBackdrop();
+}
+
+function showMovieModal() {
     // Check the class if it's visible or not (the other class will remain it will just add the new class)
-    addMovieModalElement.classList.toggle('visible');
+    addMovieModalElement.classList.add('visible');
     // Call the function (backdrop)
     toggleBackdrop();
     // Clear the inputs
@@ -104,7 +140,9 @@ function toggleMovieModal() {
 
 function backdropClickHandler() {
     // Close the modal and Close the backdrop
-    toggleMovieModal();
+    closeMovieModal();
+    // Close the modal that ask for confirmation
+    cancelMovieDeletion();
 }
 
 function addMovieHandler() {
@@ -138,7 +176,7 @@ function addMovieHandler() {
     movies.push(newMovie);
     console.log(movies);
     // Close the modal and clear the inputs
-    toggleMovieModal();
+    closeMovieModal();
     clearMovieInputs();
     //  Render the new movie to the UI
     renderNewMovieElement(newMovie.id, newMovie.title, newMovie.image, newMovie.rating);
@@ -147,7 +185,7 @@ function addMovieHandler() {
 }
 
 // Next one is opening the modal
-startAddMovieButton.addEventListener('click', toggleMovieModal);
+startAddMovieButton.addEventListener('click', showMovieModal);
 
 // Close the modal when cancel is clicked
 cancelAddMovieButton.addEventListener('click', backdropClickHandler);
