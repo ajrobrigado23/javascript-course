@@ -62,7 +62,6 @@ function deleteMovieModal(newMovieId) {
 function cancelMovieDeletion() {
     // Hide the modal
     modal.classList.remove('visible');
-    toggleBackdrop();
 }
 
 // Create a function that deletes the movies
@@ -74,14 +73,27 @@ function deleteMovieHandler(newMovieId) {
     // Select the cancel button
     const cancel = modal.querySelector('.btn--passive');
     // Add an event listener (cancel the deletion)
-    cancel.addEventListener('click', cancelMovieDeletion);
+    cancel.addEventListener('click', () => {
+        cancelMovieDeletion();
+        backdropElement.classList.remove('visible');
+    });
+
+    // Remove the event listener
+    cancel.removeEventListener('click', backdropClickHandler);
 
     // Select the confirm button
-    const confirm = modal.querySelector('.btn--danger');
+    let confirm = modal.querySelector('.btn--danger');
+
+    // Clone the confirm button so it can be used again. (it will remove the previous object)
+    confirm.replaceWith(confirm.cloneNode(true));
+    // Swap the confirm button
+    confirm = modal.querySelector('.btn--danger');
+
     // Add an event listener (confirm the deletion)
     confirm.addEventListener('click', () => {
         deleteMovieModal(newMovieId);
         cancelMovieDeletion();
+        toggleBackdrop();
     });
 }
 
@@ -141,7 +153,6 @@ function showMovieModal() {
 function backdropClickHandler() {
     // Close the modal and Close the backdrop
     closeMovieModal();
-    // Close the modal that ask for confirmation
     cancelMovieDeletion();
 }
 
