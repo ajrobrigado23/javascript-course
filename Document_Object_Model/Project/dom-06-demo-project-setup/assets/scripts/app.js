@@ -84,6 +84,9 @@ function deleteMovieHandler(newMovieId) {
     // Select the confirm button
     let confirm = modal.querySelector('.btn--danger');
 
+    // We don't want to use the same event listener
+    // We use this one because the function we're using has a bind keyword
+
     // Clone the confirm button so it can be used again. (it will remove the previous object)
     confirm.replaceWith(confirm.cloneNode(true));
     // Swap the confirm button
