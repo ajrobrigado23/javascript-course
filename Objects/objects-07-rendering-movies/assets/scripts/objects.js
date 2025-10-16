@@ -4,8 +4,8 @@ const searchBtn = document.getElementById('search-btn');
 // Movie array
 const movies = [];
 
-// Function that render movies - output all movies in our page
-const renderMovies = () => {
+// Function that render movies - output all movies in our page (has a default argument)
+const renderMovies = (filter = '') => {
     // Get movie list element (ul)
     const movieList = document.getElementById('movie-list');
 
@@ -19,8 +19,15 @@ const renderMovies = () => {
     // Clear movie list whenever we add a new movie (and it renders it again)
     movieList.innerHTML = '';
 
-    // Loop through movies
-    movies.forEach((movie) => {
+    // Tweak the movies object
+    const filteredMovies = !filter // (if it's not truthy, falsy value)
+        //  If the filter is not truthy, return the original movies array
+        ? movies
+        // If the filter is truthy, return the filtered movies array (use a filter function)
+        : movies.filter((movie) => movie.info.title.includes(filter));
+
+    // Loop through movies (refactor instead of movie array, we used the filteredMovies)
+    filteredMovies.forEach((movie) => {
         // Create a new DOM node (list of element)
         const movieEl = document.createElement('li');
         // Set the text content
@@ -34,7 +41,7 @@ const renderMovies = () => {
             // We don't want to include the title in our output, all the key beside the title will be included.
             if (key !== 'title') {
                 // Keys are strings (accessing the dynamic property the user inputs)
-                text = text + key + ': ' + movie.info[key] + ' / ';
+                text = text + key + ': ' + movie.info[key];
             }
         }
 
@@ -81,4 +88,15 @@ const addMovieHandler = () => {
     renderMovies();
 };
 
+// Function that search movie (using the filter search)
+const searchMovieHandler = () => {
+    // Read whenever the user types something in the search box
+    const filterTerm = document.getElementById('filter-title').value;
+    // It also triggers render movies function (it should be only render the filter movies)
+    renderMovies(filterTerm);
+};
+
+// Button that add movie
 addMovieBtn.addEventListener('click', addMovieHandler);
+// Button that search movie (filtered search)
+searchBtn.addEventListener('click', searchMovieHandler);
