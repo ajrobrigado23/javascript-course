@@ -30,6 +30,16 @@ const renderMovies = (filter = '') => {
     filteredMovies.forEach((movie) => {
         // Create a new DOM node (list of element)
         const movieEl = document.createElement('li');
+
+        // Object destructuring
+        const { info, ...otherProps } = movie;
+
+        // It will store the other properties in a new object (which id in our object)
+        console.log(otherProps);
+
+        // Object destructuring adding a new name
+        const { title: movieTitle } = info;
+
         // Set the text content
         movieEl.textContent = movie.info.title;
 
