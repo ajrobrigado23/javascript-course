@@ -25,6 +25,22 @@ const renderMovies = () => {
         const movieEl = document.createElement('li');
         // Set the text content
         movieEl.textContent = movie.info.title;
+
+        // Problem we had is we don't know the input of the user in our object key [extraName]
+        let text = movie.info.title + ' - ';
+
+        // Go through key value pairs in our object (Solution)
+        for (const key in movie.info) {
+            // We don't want to include the title in our output, all the key beside the title will be included.
+            if (key !== 'title') {
+                // Keys are strings (accessing the dynamic property the user inputs)
+                text = text + key + ': ' + movie.info[key] + ' / ';
+            }
+        }
+
+        // Set the new text content after our loop
+        movieEl.textContent = text;
+
         // Append the new DOM node to the movie list (add li element to our ul)
         movieList.append(movieEl);
     });
