@@ -41,17 +41,19 @@ const renderMovies = (filter = '') => {
         const { title: movieTitle } = info;
 
         // Set the text content
-        movieEl.textContent = movie.info.title;
+        //movieEl.textContent = movie.info.title;
+        movieEl.textContent = movieTitle;
 
         // Problem we had is we don't know the input of the user in our object key [extraName]
-        let text = movie.info.title + ' - ';
+        //let text = movie.info.title + ' - ';
+        let text = movieTitle + ' - ';
 
         // Go through key value pairs in our object (Solution)
-        for (const key in movie.info) {
+        for (const key in info) {
             // We don't want to include the title in our output, all the key beside the title will be included.
             if (key !== 'title') {
                 // Keys are strings (accessing the dynamic property the user inputs)
-                text = text + key + ': ' + movie.info[key];
+                text = text + key + ': ' + info[key];
             }
         }
 
