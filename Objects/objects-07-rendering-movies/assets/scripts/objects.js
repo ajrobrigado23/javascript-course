@@ -91,7 +91,11 @@ const addMovieHandler = () => {
             [extraName]: extraValue
         },
         // Get random number
-        id: Math.random()
+        id: Math.random(),
+        // Create a method using this keyword (shorthand way to create a method)
+        getFormattedTitle() {
+            return this.info.title.toUpperCase();
+        }
     };
 
     // Add new movie to our array
