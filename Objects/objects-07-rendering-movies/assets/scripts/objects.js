@@ -39,6 +39,9 @@ const renderMovies = (filter = '') => {
 
         // Object destructuring adding a new name
         const { title: movieTitle } = info;
+        // Use the bind method to bind the objects to movie (if not it will refer to the default object which is window)
+        let { getFormattedTitle } = movie;
+        getFormattedTitle = getFormattedTitle.bind(movie);
 
         // Set the text content
         //movieEl.textContent = movie.info.title;
