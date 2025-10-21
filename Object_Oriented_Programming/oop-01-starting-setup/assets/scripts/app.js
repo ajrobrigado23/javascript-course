@@ -16,9 +16,48 @@ class Product {
 
 }
 
+class ProductItem {
 
-const productList = {
-    products: [
+    constructor(product) {
+        this.product = product;
+    }
+
+    // Render single item (element) - return the single element
+    render() {
+        // Every element needs to be appended to the parent (ul)
+        const prodEl = document.createElement('li');
+        // Create a class
+        prodEl.className = 'product-item';
+        // Output some contents about the products
+        prodEl.innerHTML = `
+            <div>
+                <img src="${this.product.imageUrl}" alt="${this.product.title}">
+                <div class="product-item__content">
+                    <h2>${this.product.title}</h2>
+                    <h3>\$${this.product.price}</h3>
+                    <p>${this.product.description}</p>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            `;
+        // Add the add to card button
+        const addCardButton = prodEl.querySelector('button');
+        // Add an event listener
+        addCardButton.addEventListener('click', () => {
+            // Solution for the problem of this.addToCard  -
+            // * the problem is that the 'this' keyword is not pointing to the ProductList class anymore (pointing to the button).
+            console.log('Adding product to cart...');
+            console.log(this.product);
+        });
+
+        // Return the single element (li)
+        return prodEl;
+    }
+}
+
+class ProductList {
+    // Default products items
+    products = [
         new Product
         (
             'A Pillow',
@@ -32,7 +71,7 @@ const productList = {
             99.99,
             'A carpet which you might like - or not.',
         )
-    ],
+    ]
 
     render() {
         const renderHook = document.getElementById('app');
@@ -42,28 +81,16 @@ const productList = {
         prodList.className = 'product-list';
         // Render a single product
         for (const prod of this.products) {
-            // Every element needs to be appended to the parent (ul)
-            const prodEl = document.createElement('li');
-            // Create a class
-            prodEl.className = 'product-item';
-            // Output some contents about the products
-            prodEl.innerHTML = `
-            <div>
-                <img src="${prod.imageUrl}" alt="${prod.title}">
-                <div class="product-item__content">
-                    <h2>${prod.title}</h2>
-                    <h3>\$${prod.price}</h3>
-                    <p>${prod.description}</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-            `;
+            // Create the class that render the single item
+            const prodEl = new ProductItem(prod)
             // Append the element to the parent
-            prodList.append(prodEl);
+            prodList.append(prodEl.render());
         }
 
         renderHook.append(prodList);
     }
-};
 
+}
+
+const productList = new ProductList();
 productList.render();
