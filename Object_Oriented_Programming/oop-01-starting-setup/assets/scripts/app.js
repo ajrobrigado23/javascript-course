@@ -1,17 +1,37 @@
+// Create a class
+class Product {
+
+    // fields
+    title;
+    imageUrl;
+    description;
+    price;
+
+    constructor(title, imageUrl, price, description) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.description = description;
+    }
+
+}
+
+
 const productList = {
     products: [
-        {
-            title: 'A Pillow',
-            imageUrl: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZnVybml0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-            price: 19.99,
-            description: 'A soft pillow!',
-        },
-        {
-            title: 'A Carpet',
-            imageUrl: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZnVybml0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-            price: 99.99,
-            description: 'A carpet which you might like - or not.',
-        },
+        new Product
+        (
+            'A Pillow',
+            'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZnVybml0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+            19.99,
+            'A soft pillow!',
+        ),
+        new Product(
+            'A Carpet',
+            'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZnVybml0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+            99.99,
+            'A carpet which you might like - or not.',
+        )
     ],
 
     render() {
