@@ -46,8 +46,7 @@ class ProductItem {
         addCardButton.addEventListener('click', () => {
             // Solution for the problem of this.addToCard  -
             // * the problem is that the 'this' keyword is not pointing to the ProductList class anymore (pointing to the button).
-            console.log('Adding product to cart...');
-            console.log(this.product);
+            App.addToProductToCart(this.product);
         });
 
         // Return the single element (li)
@@ -96,6 +95,13 @@ class ProductList {
 class ShoppingCart {
     // Items field
     items = [];
+
+    addProduct(product) {
+        this.items.push(product);
+        // Update the HTML content here not the value stored in total output (this.totalOutput)
+        this.totalOutput.innerHTML = `<h2>Total: \$${1}</h2>`;
+    }
+
     render() {
         const renderHook = document.getElementById('app');
         // Create an element (section)
@@ -110,18 +116,23 @@ class ShoppingCart {
         // Add the add to card button
         const orderButton = cartEl.querySelector('button');
         // Add an event listener
+
+        // Dynamically add a property to a class using the 'this' keyword
+        this.totalOutput = cartEl.querySelector('h2');
+
         return cartEl;
     }
 }
 
 // Class that combine cart and product list
-class App {
+class Shop {
     render() {
         const renderHook = document.getElementById('app');
 
-        const cart = new ShoppingCart();
+        // Store in a property (refactor)
+        this.cart = new ShoppingCart();
         // Get the cart element
-        const cartEl = cart.render();
+        const cartEl = this.cart.render();
         const productList = new ProductList();
         // Get the product list element
         const prodListEl = productList.render();
@@ -130,6 +141,24 @@ class App {
         renderHook.append(prodListEl);
     }
 }
-// Create the class that communicates to other classes
-const app = new App();
-app.render();
+
+class App {
+
+    static cart;
+
+    // Create a static methods
+    static init() {
+        // Create an instance
+        const shop = new Shop();
+        shop.render();
+        this.cart = shop.cart;
+    }
+
+    // add another static method
+    static addToProductToCart(product) {
+        this.cart.addProduct(product);
+    }
+}
+
+// Create the class that communicates to other classes (using the static class we created)
+App.init();
