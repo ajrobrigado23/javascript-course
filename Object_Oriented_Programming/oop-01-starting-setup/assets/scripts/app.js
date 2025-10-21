@@ -74,7 +74,7 @@ class ProductList {
     ]
 
     render() {
-        const renderHook = document.getElementById('app');
+
         // Create an element
         const prodList = document.createElement('ul');
         // Add a class
@@ -87,10 +87,49 @@ class ProductList {
             prodList.append(prodEl.render());
         }
 
-        renderHook.append(prodList);
+        return prodList;
     }
 
 }
 
-const productList = new ProductList();
-productList.render();
+// Add another class (Shopping Cart)
+class ShoppingCart {
+    // Items field
+    items = [];
+    render() {
+        const renderHook = document.getElementById('app');
+        // Create an element (section)
+        const cartEl = document.createElement('section');
+        // Add a class
+        cartEl.className = 'cart';
+        // Output some contents about the products
+        cartEl.innerHTML = `
+            <h2>Total: \$${0}</h2> 
+            <button>Order Now!</button>
+            `;
+        // Add the add to card button
+        const orderButton = cartEl.querySelector('button');
+        // Add an event listener
+        return cartEl;
+    }
+}
+
+// Class that combine cart and product list
+class App {
+    render() {
+        const renderHook = document.getElementById('app');
+
+        const cart = new ShoppingCart();
+        // Get the cart element
+        const cartEl = cart.render();
+        const productList = new ProductList();
+        // Get the product list element
+        const prodListEl = productList.render();
+
+        renderHook.append(cartEl);
+        renderHook.append(prodListEl);
+    }
+}
+// Create the class that communicates to other classes
+const app = new App();
+app.render();
