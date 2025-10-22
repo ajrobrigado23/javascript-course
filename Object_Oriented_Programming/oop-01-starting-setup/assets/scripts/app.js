@@ -96,10 +96,25 @@ class ShoppingCart {
     // Items field
     items = [];
 
-    addProduct(product) {
-        this.items.push(product);
+    // Create a getters and setters
+
+    // Set new cart items (recalculate the total amount)
+    set cartItems(cartProducts) {
+        this.items = cartProducts;
         // Update the HTML content here not the value stored in total output (this.totalOutput)
-        this.totalOutput.innerHTML = `<h2>Total: \$${1}</h2>`;
+        this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(2)}</h2>`;
+    }
+    get totalAmount() {
+        // Use the reduce function
+        const sum = this.items.reduce((prevValue, curItem) => prevValue + curItem.price, 0);
+        // Return the total sum
+        return sum;
+    }
+
+    addProduct(product) {
+        const updatedItems = [...this.items];
+        updatedItems.push(product);
+        this.cartItems = updatedItems;
     }
 
     render() {
