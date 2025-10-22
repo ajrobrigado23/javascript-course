@@ -16,6 +16,43 @@ class Product {
 
 }
 
+class ElementAttribute {
+    constructor(name, value) {
+        this.name = name;
+        this.value = value;
+    }
+}
+
+
+// Output different components
+class Component {
+
+    constructor(renderHookId) {
+        this.hookId = renderHookId;
+    }
+
+    // attributes parameter - full of objects
+    createRootElement(tag, cssClasses, attributes) {
+        const rootElement = document.createElement(tag);
+
+        if (cssClasses) {
+            rootElement.className = cssClasses;
+        }
+
+        if (attributes && attributes.length > 0) {
+
+            for (const attr of attributes) {
+                rootElement.setAttribute(attr.name, attr.value);
+            }
+        }
+
+        document.getElementById(this.hookId).append(rootElement);
+        // Return the root element
+        return rootElement;
+
+    }
+}
+
 class ProductItem {
 
     constructor(product) {
@@ -92,9 +129,14 @@ class ProductList {
 }
 
 // Add another class (Shopping Cart)
-class ShoppingCart {
+class ShoppingCart extends Component{
     // Items field
     items = [];
+
+    constructor(renderHook) {
+        super(renderHook);
+    }
+
 
     // Create a getters and setters
 
@@ -112,17 +154,23 @@ class ShoppingCart {
     }
 
     addProduct(product) {
+        // Create a copy of the items
         const updatedItems = [...this.items];
+        // Add the product to the items
         updatedItems.push(product);
+        // Update the cart items (using set)
         this.cartItems = updatedItems;
     }
 
     render() {
+        // Use the method we created in our parent class
+        const cartEl = this.createRootElement('section', 'cart');
+
         const renderHook = document.getElementById('app');
         // Create an element (section)
-        const cartEl = document.createElement('section');
+        // const cartEl = document.createElement('section');
         // Add a class
-        cartEl.className = 'cart';
+        // cartEl.className = 'cart';
         // Output some contents about the products
         cartEl.innerHTML = `
             <h2>Total: \$${0}</h2> 
@@ -134,8 +182,6 @@ class ShoppingCart {
 
         // Dynamically add a property to a class using the 'this' keyword
         this.totalOutput = cartEl.querySelector('h2');
-
-        return cartEl;
     }
 }
 
@@ -145,14 +191,13 @@ class Shop {
         const renderHook = document.getElementById('app');
 
         // Store in a property (refactor)
-        this.cart = new ShoppingCart();
+        this.cart = new ShoppingCart('app');
         // Get the cart element
-        const cartEl = this.cart.render();
+        this.cart.render();
         const productList = new ProductList();
         // Get the product list element
         const prodListEl = productList.render();
 
-        renderHook.append(cartEl);
         renderHook.append(prodListEl);
     }
 }
