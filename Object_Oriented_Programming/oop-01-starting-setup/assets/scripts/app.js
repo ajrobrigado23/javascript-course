@@ -46,7 +46,9 @@ class Component {
             }
         }
 
+        // Get element and append the root element (element we want to add)
         document.getElementById(this.hookId).append(rootElement);
+
         // Return the root element
         return rootElement;
 
