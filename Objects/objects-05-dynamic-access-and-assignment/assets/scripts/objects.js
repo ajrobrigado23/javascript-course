@@ -29,3 +29,13 @@ const keyName = 'first name';
 console.log(person[keyName]);
 console.log(person[1.5]);
 console.log(person);
+
+const createObject = (keyOne, value, keyTwo) => {
+    // Use the computed property name
+    return {
+      [keyOne] : value,
+      [keyTwo] : value
+    };
+};
+
+console.log(createObject('fullName', 'Max', 'NickName'))
